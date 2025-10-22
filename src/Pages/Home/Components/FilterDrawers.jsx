@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-export function FilterDrawer({ categories = [], onApply }) {
+export function FilterDrawer ({ categories = [], onApply }) {
   const [selected, setSelected] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 

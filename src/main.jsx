@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { Provider } from "./components/ui/provider";
 import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "./components/ui/toaster";
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      <Toaster />
+    
     </Provider>
   </StrictMode>
 );

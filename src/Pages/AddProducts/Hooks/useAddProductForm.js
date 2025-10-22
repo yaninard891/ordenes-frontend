@@ -1,23 +1,29 @@
 import { AddProductsEndpoint } from "../../../services/AddProductsEndpoint";
-import { toaster } from "../../../components/ui/toaster";
 import { useRef, useState } from "react";
 
 export function useAddProductForm() {
-  const categoriasBase = ["Electrónicos", "Cocina", "Hogar", "Otros"];
+  const categoriasBase = ["Electrodomesticos", "Muebles de oficina", "Muebles de living", "Otros"];
 
   const [form, setForm] = useState({
     nombre: "",
     precio: "",
     categoria: "",
-    descripcion: "",
+    estado: "",
+    descripcion: "",  // corregí que estaba faltando descripción
   });
 
   const [categoriaControl, setCategoriaControl] = useState("");
   const [nuevaCategoria, setNuevaCategoria] = useState("");
   const [categorias, setCategorias] = useState(categoriasBase);
-
   const [errors, setErrors] = useState({});
   const submittedRef = useRef(false);
+
+  // Estado para snackbar
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+  });
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -47,19 +53,16 @@ export function useAddProductForm() {
 
   const validate = () => {
     const next = {};
-    // nombre
     if (!form.nombre?.trim()) next.nombre = "El nombre es obligatorio.";
     else if (form.nombre.trim().length < 2)
       next.nombre = "El nombre es muy corto.";
 
-    // precio
     const precioNum = Number(form.precio);
     if (form.precio === "") next.precio = "El precio es obligatorio.";
     else if (Number.isNaN(precioNum))
       next.precio = "El precio debe ser un número.";
     else if (precioNum <= 0) next.precio = "El precio debe ser mayor a 0.";
 
-    // categoría
     if (categoriaControl === "añadir") {
       if (!nuevaCategoria.trim())
         next.nuevaCategoria = "Ingresá la nueva categoría.";
@@ -71,13 +74,7 @@ export function useAddProductForm() {
   };
 
   const focusFirstInvalid = (errs) => {
-    const order = [
-      "nombre",
-      "precio",
-      "categoria",
-      "nuevaCategoria",
-      "descripcion",
-    ];
+    const order = ["nombre", "precio", "categoria", "nuevaCategoria", "estado"];
     for (const key of order) {
       if (errs[key]) {
         const el = document.querySelector(`[name="${key}"]`);
@@ -101,11 +98,14 @@ export function useAddProductForm() {
         nextErrors.categoria ||
         nextErrors.nuevaCategoria ||
         "Revisá los campos marcados.";
-      toaster.create({
-        title: "Error al guardar",
-        description: firstMsg,
-        type: "error",
+
+      // Mostrar snackbar con error
+      setSnackbar({
+        open: true,
+        message: firstMsg,
+        severity: "error",
       });
+
       setTimeout(() => focusFirstInvalid(nextErrors), 0);
       return;
     }
@@ -125,26 +125,25 @@ export function useAddProductForm() {
       nombre: form.nombre.trim(),
       precio: Number(form.precio),
       categoria: categoriaFinal,
+      descripcion: form.descripcion.trim(),
     };
 
     const response = await AddProductsEndpoint(nuevoProducto);
 
     if (response?._id) {
-      toaster.create({
-        title: "Producto agregado",
-        description: `${nuevoProducto.nombre} fue cargado correctamente.`,
-        type: "success",
+      setSnackbar({
+        open: true,
+        message: `${nuevoProducto.nombre} fue cargado correctamente.`,
+        severity: "success",
       });
-    }
-    if (!response?._id) {
-      toaster.create({
-        title: "Error",
-        description: `${nuevoProducto.nombre} no fue cargado correctamente.`,
-        type: "error",
+    } else {
+      setSnackbar({
+        open: true,
+        message: `${nuevoProducto.nombre} no fue cargado correctamente.`,
+        severity: "error",
       });
     }
 
-    // reset
     setForm({ nombre: "", precio: "", categoria: "", descripcion: "" });
     setCategoriaControl("");
     setNuevaCategoria("");
@@ -164,5 +163,7 @@ export function useAddProductForm() {
     onChange,
     onChangeCategoria,
     onSubmit,
+    snackbar,
+    setSnackbar,
   };
 }

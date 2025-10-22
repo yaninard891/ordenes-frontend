@@ -1,5 +1,4 @@
-import { getProductsByCategory } from "./Pages/Home/Hooks/useHome";
-
+import { getProductsByCategory } from "../../../services/getProductsByCategory";
 import { useEffect, useState } from "react";
 
 export const useHome = () => {

@@ -6,6 +6,7 @@ import {
   Button,
   Stack,
   Paper,
+  Snackbar,
 } from "@mui/material";
 import { useAddProductForm } from "./Hooks/useAddProductForm";
 import ProductNameField from "./components/ProductNameField";
@@ -24,7 +25,13 @@ export default function AddProducts() {
     onChangeCategoria,
     onSubmit,
     setNuevaCategoria,
+    snackbar, setSnackbar,
   } = useAddProductForm();
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") return;
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   return (
     <Paper
@@ -83,6 +90,15 @@ export default function AddProducts() {
           Guardar producto
         </Button>
       </form>
+
+       <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+      
+      </Snackbar>
     </Paper>
   );
 }

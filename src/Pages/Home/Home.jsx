@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Grid,
-  Stack,
-  CircularProgress,
-  Typography,
-  Paper,
-} from "@mui/material";
+import { Box, Grid, Stack, CircularProgress, Typography, Paper,} from "@mui/material";
 import { useHome } from "./Hooks/useHome";
-import FilterDrawer from "./Components/FilterDrawers";
+import {FilterDrawer} from "./Components/FilterDrawers";
 
 
 export default function Home() {
