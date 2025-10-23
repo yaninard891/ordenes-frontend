@@ -16,7 +16,7 @@ export function ColorModeProvider({ children }) {
     },
   }), []);
 
-  // Creamos el tema con base en el modo actual
+  
   const theme = useMemo(() => createTheme({
     palette: {
       mode,
@@ -32,7 +32,7 @@ export function ColorModeProvider({ children }) {
   );
 }
 
-// Hook para consumir el contexto y obtener toggle y modo actual
+
 export function useColorMode() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
@@ -42,13 +42,13 @@ export function useColorMode() {
   };
 }
 
-// Componente para mostrar el icono de modo actual
+
 export function ColorModeIcon() {
   const { colorMode } = useColorMode();
   return colorMode === 'dark' ? <Brightness4Icon /> : <Brightness7Icon />;
 }
 
-// Botón para alternar el modo de color
+
 export const ColorModeButton = React.forwardRef(function ColorModeButton(props, ref) {
   const { toggleColorMode } = useColorMode();
 

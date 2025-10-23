@@ -1,13 +1,13 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const AUTH = import.meta.env.VITE_AUTH;
 
-export const AddProductsEndpoint = async (body) => {
+
+export const AddOrdenEndpoint = async (body) => {
   try {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch (BASE_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${AUTH}`,
+       
       },
       body: JSON.stringify(body),
     });

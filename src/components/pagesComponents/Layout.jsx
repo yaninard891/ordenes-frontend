@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  Stack,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { NavButton } from "./NavButton"; // Asumo que este lo tienes y funciona bien
+import { Box, Button, Container, Typography, Stack, AppBar, Toolbar,} from "@mui/material";
+import { NavLink, useLocation } from "react-router-dom";
+import { NavButton } from "./NavButton";
 
 export function Layout({
-  title = "Inventario",
-  subtitle = "Lista de productos",
+  title = "Ordenes",
+  subtitle = "Lista de ordenes",
   children,
 }) {
   const location = useLocation();
@@ -21,7 +13,7 @@ export function Layout({
   return (
     <Box
       sx={{
-        background: "linear-gradient(to bottom, #f9fafb, #f0f0f0)", // Ajusta colores similares a sand.50, sand.100
+        background: "linear-gradient(to bottom, #f9fafb, #f0f0f0)",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -50,10 +42,10 @@ export function Layout({
                 Inicio
               </NavButton>
               <NavButton
-                to="/addProducts"
-                active={location.pathname === "/addProducts"}
+                to="/addOrden"
+                active={location.pathname === "/addOrden"}
               >
-                Agregar Productos
+                Agregar Ordenes
               </NavButton>
             </Stack>
 
@@ -63,7 +55,15 @@ export function Layout({
       </AppBar>
 
       <Container maxWidth="lg" sx={{ py: 4, flexGrow: 1 }}>
-        <Outlet />
+
+        {subtitle && (
+          <Typography variant="h5" color="text.secondary" gutterBottom>
+            {subtitle}
+          </Typography>
+        )}
+
+        
+        {children}
       </Container>
 
       <Box
@@ -74,8 +74,6 @@ export function Layout({
           borderColor: "divider",
           bgcolor: "background.paper",
           py: 2,
-          position: "relative",
-          width: "100%",
         }}
       >
         <Container maxWidth="lg">
@@ -85,7 +83,7 @@ export function Layout({
             </Typography>
             <Button
               component={NavLink}
-              to="/addProducts"
+              to="/addOrden"
               variant="text"
               size="small"
               sx={{
@@ -94,7 +92,7 @@ export function Layout({
                 },
               }}
             >
-              Agregar productos
+              Agregar ordenes
             </Button>
           </Stack>
         </Container>

@@ -1,27 +1,30 @@
-import { getProductsByCategory } from "../../../services/getProductsByCategory";
+import { getProductsByState } from "../../../Services/getProductsByState";
 import { useEffect, useState } from "react";
 
 export const useHome = () => {
-  const [cat, setCat] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [estado, setEstado] = useState(null); // estado seleccionado
+  const [estadosDisponibles, setEstadosDisponibles] = useState([]); // lista de estados únicos en productos
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
-    getProductsByCategory(cat).then((res) => {
+    setLoading(true);
+    getProductsByState(estado).then((res) => {
       setProducts(res);
       setLoading(false);
     });
-  }, [cat]);
+  }, [estado]);
 
+  
   useEffect(() => {
-    if (products && products.length > 0) {
-      const uniqueCategories = [
-        ...new Set(products.map((prod) => prod.categoria)),
-      ];
-      setCategories(uniqueCategories);
+    if (products.length > 0) {
+      const uniqueEstados = [...new Set(products.map((p) => p.estado))];
+      setEstadosDisponibles(uniqueEstados);
+    } else {
+      setEstadosDisponibles([]);
     }
   }, [products]);
 
-  return { cat, setCat, categories, products, loading };
+  return { estado, setEstado, estadosDisponibles, products, loading };
 };
