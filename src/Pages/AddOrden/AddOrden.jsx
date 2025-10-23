@@ -1,24 +1,14 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Stack,
-  Paper,
-  Snackbar,
-} from "@mui/material";
+import { Paper, Typography, Stack, Button, Snackbar } from "@mui/material";
 import { useAddOrdenForm } from "./Hooks/useAddOrdenForm";
 
+import DestinoField from "./components/DestinoField";
+import ContenidoField from "./components/ContenidoField";
+import FechaField from "./components/FechaField";
+import EstadoField from "./components/EstadoField";
+
 export default function AddOrden() {
-  const {
-    form,
-    errors,
-    onChange,
-    onSubmit,
-    snackbar,
-    setSnackbar,
-  } = useAddOrdenForm();
+  const { form, errors, onChange, onSubmit, snackbar, setSnackbar } = useAddOrdenForm();
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") return;
@@ -43,47 +33,13 @@ export default function AddOrden() {
         </Typography>
 
         <Stack spacing={3}>
-          <TextField
-            label="Destino"
-            name="destino"
-            value={form.destino}
-            onChange={onChange}
-            error={!!errors.destino}
-            helperText={errors.destino}
-            fullWidth
-          />
+          <DestinoField value={form.destino} onChange={onChange} error={errors.destino} />
 
-          <TextField
-            label="Contenido"
-            name="contenido"
-            value={form.contenido}
-            onChange={onChange}
-            error={!!errors.contenido}
-            helperText={errors.contenido}
-            fullWidth
-          />
+          <ContenidoField value={form.contenido} onChange={onChange} error={errors.contenido} />
 
-          <TextField
-            label="Fecha de creación"
-            name="fecha_creacion"
-            type="date"
-            value={form.fecha_creacion}
-            onChange={onChange}
-            error={!!errors.fecha_creacion}
-            helperText={errors.fecha_creacion}
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-          />
+          <FechaField value={form.fecha_creacion} onChange={onChange} error={errors.fecha_creacion} />
 
-          <TextField
-            label="Estado"
-            name="estado"
-            value={form.estado}
-            onChange={onChange}
-            error={!!errors.estado}
-            helperText={errors.estado}
-            fullWidth
-          />
+          <EstadoField value={form.estado} onChange={onChange} error={errors.estado} />
         </Stack>
 
         <Button
