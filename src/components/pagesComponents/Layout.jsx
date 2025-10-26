@@ -1,12 +1,19 @@
 import React from "react";
-import { Box, Button, Container, Typography, Stack, AppBar, Toolbar,} from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  Stack,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+import { NavLink, useLocation, Outlet } from "react-router-dom";
 import { NavButton } from "./NavButton";
 
 export function Layout({
-  title = "Ordenes",
-  subtitle = "Lista de ordenes",
-  children,
+  title = "Gestión de Órdenes",
+  subtitle = "Lista de órdenes",
 }) {
   const location = useLocation();
 
@@ -45,7 +52,19 @@ export function Layout({
                 to="/addOrden"
                 active={location.pathname === "/addOrden"}
               >
-                Agregar Ordenes
+                Agregar
+              </NavButton>
+              <NavButton
+                to="/orders/edit"
+                active={location.pathname.startsWith("/orders/edit")}
+              >
+                Editar
+              </NavButton>
+              <NavButton
+                to="/orders/delete"
+                active={location.pathname.startsWith("/orders/delete")}
+              >
+                Eliminar
               </NavButton>
             </Stack>
 
@@ -55,15 +74,13 @@ export function Layout({
       </AppBar>
 
       <Container maxWidth="lg" sx={{ py: 4, flexGrow: 1 }}>
-
         {subtitle && (
           <Typography variant="h5" color="text.secondary" gutterBottom>
             {subtitle}
           </Typography>
         )}
 
-        
-        {children}
+        <Outlet />
       </Container>
 
       <Box
@@ -79,20 +96,16 @@ export function Layout({
         <Container maxWidth="lg">
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography color="text.secondary" variant="body2" flexGrow={1}>
-              © {new Date().getFullYear()} Inventario
+              © {new Date().getFullYear()} Órdenes
             </Typography>
             <Button
               component={NavLink}
               to="/addOrden"
               variant="text"
               size="small"
-              sx={{
-                "&:hover": {
-                  bgcolor: "grey.100",
-                },
-              }}
+              sx={{ "&:hover": { bgcolor: "grey.100" } }}
             >
-              Agregar ordenes
+              Agregar órdenes
             </Button>
           </Stack>
         </Container>

@@ -1,30 +1,39 @@
-import { getProductsByState } from "../../../Services/getProductsByState";
 import { useEffect, useState } from "react";
+import { getOrderByState } from "../../../services/getOrderByState";
 
 export const useHome = () => {
-  const [estado, setEstado] = useState(null); // estado seleccionado
-  const [estadosDisponibles, setEstadosDisponibles] = useState([]); // lista de estados únicos en productos
-  const [products, setProducts] = useState([]);
+  const [ordenes, setOrdenes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const estadosDisponibles = ["Pendiente", "En transito", "Entregado"];
 
-  
+  // Cargar órdenes
   useEffect(() => {
-    setLoading(true);
-    getProductsByState(estado).then((res) => {
-      setProducts(res);
-      setLoading(false);
-    });
-  }, [estado]);
+    const fetchOrdenes = async () => {
+      try {
+        const data = await getOrderByState();
+        setOrdenes(data);
+      } catch (err) {
+        setError("Error al cargar órdenes");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrdenes();
+  }, []);
 
-  
-  useEffect(() => {
-    if (products.length > 0) {
-      const uniqueEstados = [...new Set(products.map((p) => p.estado))];
-      setEstadosDisponibles(uniqueEstados);
-    } else {
-      setEstadosDisponibles([]);
-    }
-  }, [products]);
+  // Filtrado por estado
+  const ordenesFiltradas = estadoSeleccionado
+    ? ordenes.filter((o) => o.estado === estadoSeleccionado)
+    : ordenes;
 
-  return { estado, setEstado, estadosDisponibles, products, loading };
+  return {
+    ordenesFiltradas,
+    loading,
+    error,
+    estadosDisponibles,
+    estadoSeleccionado,
+    setEstadoSeleccionado,
+  };
 };
