@@ -6,13 +6,15 @@ export const useHome = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+
   const estadosDisponibles = ["Pendiente", "En transito", "Entregado"];
 
-  // Cargar órdenes
   useEffect(() => {
     const fetchOrdenes = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const data = await getOrderByState();
+        const data = await getOrderByState(estadoSeleccionado || null);
         setOrdenes(data);
       } catch (err) {
         setError("Error al cargar órdenes");
@@ -20,10 +22,10 @@ export const useHome = () => {
         setLoading(false);
       }
     };
-    fetchOrdenes();
-  }, []);
 
-  // Filtrado por estado
+    fetchOrdenes();
+  }, [estadoSeleccionado]);
+
   const ordenesFiltradas = estadoSeleccionado
     ? ordenes.filter((o) => o.estado === estadoSeleccionado)
     : ordenes;

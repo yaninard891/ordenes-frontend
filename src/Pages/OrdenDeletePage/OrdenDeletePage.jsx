@@ -25,11 +25,11 @@ export default function OrdenDeletePage() {
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [refresh, setRefresh] = useState(false);
 
-  // Traer órdenes
+  // Traer órdenes con estado
   useEffect(() => {
     const fetchOrdenes = async () => {
       try {
-        const data = await getOrderByState ();
+        const data = await getOrderByState(); // Asegúrate de que esta función esté bien definida
         setOrdenes(data);
       } catch {
         setSnackbar({ open: true, message: "Error al cargar órdenes", severity: "error" });
@@ -38,7 +38,7 @@ export default function OrdenDeletePage() {
     fetchOrdenes();
   }, [refresh]);
 
-  // Filtrar órdenes según query
+  // Filtrar órdenes según el valor de `query`
   const filteredOrdenes = ordenes.filter((o) => {
     const q = query.toLowerCase();
     return (
@@ -54,10 +54,10 @@ export default function OrdenDeletePage() {
 
   const confirmDelete = async () => {
     try {
-      const res = await DeleteOrden (toDelete._id);
+      const res = await DeleteOrden(toDelete._id);
       if (res?.message === "Orden eliminada") {
         setSnackbar({ open: true, message: "Orden eliminada exitosamente", severity: "success" });
-        setRefresh((prev) => !prev);
+        setRefresh((prev) => !prev); // Cambiar estado para refrescar la lista
       } else {
         setSnackbar({ open: true, message: "Error al eliminar orden", severity: "error" });
       }
@@ -120,7 +120,7 @@ export default function OrdenDeletePage() {
         </DialogActions>
       </Dialog>
 
-     
+      {/* Snackbar para mostrar mensajes de éxito o error */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
@@ -128,6 +128,6 @@ export default function OrdenDeletePage() {
       >
         <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
       </Snackbar>
-    </Container>
+    </Container> // Asegúrate de que el Container esté cerrado correctamente
   );
 }

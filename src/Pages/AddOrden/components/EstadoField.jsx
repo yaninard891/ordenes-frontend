@@ -1,9 +1,9 @@
 import React from "react";
 import { TextField, MenuItem } from "@mui/material";
 
-const opcionesEstado = ["Pendiente", "Entregada", "En transito"];
+export default function EstadoField({ value, onChange, error }) {
+  const opcionesEstado = ["Pendiente", "En transito", "Entregada", "Otros"];
 
-export default function EstadoField({ value, onChange, error, helperText }) {
   return (
     <TextField
       select
@@ -11,10 +11,11 @@ export default function EstadoField({ value, onChange, error, helperText }) {
       name="estado"
       value={value}
       onChange={onChange}
-      error={error}
-      helperText={helperText}
+      error={!!error}
+      helperText={error || ""}
       fullWidth
     >
+      <MenuItem value="">Seleccioná un estado</MenuItem>
       {opcionesEstado.map((estado) => (
         <MenuItem key={estado} value={estado}>
           {estado}

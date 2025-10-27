@@ -1,20 +1,38 @@
 import React, { useState } from "react";
-import { Drawer, IconButton, Select, MenuItem, Button, FormControl, InputLabel, Box, Typography, Stack,} from "@mui/material";
+import {
+  Drawer,
+  IconButton,
+  Select,
+  MenuItem,
+  Button,
+  FormControl,
+  InputLabel,
+  Box,
+  Typography,
+  Stack,
+} from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-export function FilterDrawer({ onApply }) {
+export function FilterDrawer({ options = [], onApply, label = "Filtro" }) {
   const [selected, setSelected] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = (open) => () => setIsOpen(open);
 
   const handleApply = () => {
-    onApply(selected || null);
+    onApply(selected || null); // pasa null si no hay filtro
+    setIsOpen(false);
+  };
+
+  const handleClear = () => {
+    setSelected("");
+    onApply(null);
     setIsOpen(false);
   };
 
   return (
     <>
+      {/* Botón para abrir el drawer */}
       <IconButton
         aria-label="Abrir filtro"
         onClick={toggleDrawer(true)}
@@ -22,43 +40,18 @@ export function FilterDrawer({ onApply }) {
           bgcolor: "primary.main",
           color: "white",
           borderRadius: "12px",
-          padding: "10px",
+          p: 1.5,
+          ":hover": { bgcolor: "primary.dark" },
         }}
       >
         <FilterListIcon />
       </IconButton>
 
+      {/* Drawer lateral */}
       <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 300, padding: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Filtrar por estado
+        <Box sx={{ width: 300, p: 3 }}>
+          <Typography variant="h6" fontWeight="bold" gutterBottom>
+            {label}
           </Typography>
 
-          <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel id="estado-label">Estado</InputLabel>
-            <Select
-              labelId="estado-label"
-              value={selected}
-              label="Estado"
-              onChange={(e) => setSelected(e.target.value)}
-            >
-              <MenuItem value="">Todos</MenuItem>
-              <MenuItem value="Pendiente">Pendiente</MenuItem>
-              <MenuItem value="En transito ">En transito</MenuItem>
-              <MenuItem value="Entregada">Entregada</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Stack direction="row" justifyContent="flex-end" spacing={2} mt={4}>
-            <Button variant="contained" color="primary" onClick={handleApply}>
-              Aplicar
-            </Button>
-            <Button variant="outlined" onClick={toggleDrawer(false)}>
-              Cancelar
-            </Button>
-          </Stack>
-        </Box>
-      </Drawer>
-    </>
-  );
-}
+          <FormControl fullWidth sx={{ mt: 3 }}>

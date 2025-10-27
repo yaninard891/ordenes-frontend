@@ -1,99 +1,107 @@
-import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  Grid,
-  Paper,
-  Button,
-  Snackbar,
-  Alert,
-} from "@mui/material";
-import { EditOrdenModal } from "./Components/EditOrdenModal";
+import React, { useEffect, useState } from "react";
+import { Box, Container, Typography, Button, Snackbar, Alert, CircularProgress } from "@mui/material";
+import { TableOrden } from "../../components/pagesComponents/TableOrden";
+import { EditOrdenModal } from "../UpdateOrden/Components/EditOrdenModal";
 import { updateOrden } from "../../services/updateOrden";
-import { getOrderByState } from "../../services/getOrderByState";
+import { getOrderByState } from "../../services/getOrderByState"; 
 
 export default function UpdateOrdenPages() {
-  const [ordenes, setOrdenes] = useState([]);
-  const [editing, setEditing] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [orders, setOrders] = useState([]); 
+  const [editingOrder, setEditingOrder] = useState(null); 
+  const [openModal, setOpenModal] = useState(false); 
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [loading, setLoading] = useState(true); 
 
-  // Traer las órdenes al montar el componente
+  
   useEffect(() => {
-    fetchOrdenes();
+    getOrderByState()
+      .then((data) => {
+        setOrders(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setSnackbar({ open: true, message: "Error al cargar las órdenes", severity: "error" });
+        setLoading(false);
+      });
   }, []);
 
-  const fetchOrdenes = async () => {
-    try {
-      const data = await getOrderByState();
-      setOrdenes(data);
-    } catch (error) {
-       console.error(error);
-      setSnackbar({ open: true, message: "Error al cargar órdenes", severity: "error" });
-    }
+ 
+  const handleEdit = (order) => {
+    setEditingOrder(order);
+    setOpenModal(true); 
   };
 
-  const onEdit = (orden) => {
-    setEditing(orden);
-    setOpen(true);
-  };
+ 
+  const handleCloseModal = () => setOpenModal(false);
 
-  const handleSubmit = async (data) => {
-    if (!editing) return;
-
+  
+  const handleSubmit = async (form) => {
     try {
-      const res = await updateOrden(data, editing._id);
-
-      if (res?._id) {
-        setOrdenes((prev) => prev.map((o) => (o._id === res._id ? res : o)));
-        setSnackbar({ open: true, message: "Orden actualizada con éxito", severity: "success" });
+      const response = await updateOrden (form, editingOrder._id); // Actualizamos la orden
+      if (response?.status === 200) {
+        setSnackbar({
+          open: true,
+          message: "Orden actualizada exitosamente",
+          severity: "success",
+        });
+        
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order._id === editingOrder._id ? { ...order, ...form } : order
+          )
+        );
       } else {
-        setSnackbar({ open: true, message: "Error al actualizar orden", severity: "error" });
+        setSnackbar({
+          open: true,
+          message: "Error al actualizar la orden",
+          severity: "error",
+        });
       }
     } catch (error) {
-       console.error(error);
-      setSnackbar({ open: true, message: "Error al actualizar orden", severity: "error" });
+      setSnackbar({
+        open: true,
+        message: "Error al actualizar la orden",
+        severity: "error",
+      });
+    } finally {
+      handleCloseModal();
     }
-
-    setOpen(false);
   };
 
   return (
-    <Container sx={{ py: 4 }}>
-      <Typography variant="h4" mb={4}>
+    <Container>
+      <Typography variant="h4" gutterBottom>
         Editar Órdenes
       </Typography>
 
-      <Grid container spacing={2}>
-        {ordenes.map((orden) => (
-          <Grid item xs={12} sm={6} md={4} key={orden._id}>
-            <Paper sx={{ p: 2 }}>
-              <Typography><b>Destino:</b> {orden.destino}</Typography>
-              <Typography><b>Contenido:</b> {orden.contenido}</Typography>
-              <Typography><b>Estado:</b> {orden.estado}</Typography>
-              <Button
-                variant="contained"
-                sx={{ mt: 1 }}
-                onClick={() => onEdit(orden)}
-              >
-                Editar
-              </Button>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
+      
+      {loading ? (
+        <Box display="flex" justifyContent="center" mt={10}>
+          <CircularProgress size={60} thickness={5} />
+        </Box>
+      ) : (
+        <>
+          
+          <TableOrden orders={orders} onEdit={handleEdit} />
 
-      <EditOrdenModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        orden={editing}
-        onSubmit={handleSubmit}
-      />
+          
+          {editingOrder && (
+            <EditOrdenModal
+              isOpen={openModal}
+              onClose={handleCloseModal}
+              order={editingOrder}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </>
+      )}
 
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
       </Snackbar>

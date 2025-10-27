@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 export function useResponsiveOrderDetail() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Detecta si es desktop usando MUI
+ 
   const isDesktop = useMediaQuery("(min-width: 860px)");
 
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import { AddOrdenEndpoint } from "../../../services/AddOrdenEndpoint";
 import { useRef, useState } from "react";
 
 export function useAddOrdenForm() {
-  const estadoBase = ["Pendiente", "En transito", "Entregada", "Otros"];
+  const estados= ["Pendiente", "En transito", "Entregada", "Otros"];
 
   const [form, setForm] = useState({
     destino: "",
@@ -11,7 +11,7 @@ export function useAddOrdenForm() {
     estado: "", 
   });
 
-const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const submittedRef = useRef(false);
 
   const [snackbar, setSnackbar] = useState({
@@ -22,7 +22,7 @@ const [errors, setErrors] = useState({});
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setForm((p) => ({ ...p, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
     if (submittedRef.current && errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -77,7 +77,7 @@ const [errors, setErrors] = useState({});
     if (response?._id) {
       setSnackbar({
         open: true,
-        message: "Orden creada",
+        message: "Orden creada correctamente",
         severity: "success",
       });
       setForm({ destino: "", contenido: "", fecha_creacion: "", estado: "" });
@@ -86,7 +86,7 @@ const [errors, setErrors] = useState({});
     } else {
       setSnackbar({
         open: true,
-        message: "Orden no fue cargada",
+        message: "Error al crear la orden",
         severity: "error",
       });
     }
@@ -94,11 +94,13 @@ const [errors, setErrors] = useState({});
 
   return {
     form,
+    setForm,
     errors,
     onChange,
     onSubmit,
     snackbar,
     setSnackbar,
-    estadoBase,
+    estados,
+    submittedRef,
   };
 }

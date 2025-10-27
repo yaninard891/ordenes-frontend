@@ -5,10 +5,10 @@ import {
   ORDERS_ACTIONS,
 } from "./reducers/OrdersReducer";
 
-// Crear contexto
+
 const OrdersContext = createContext(null);
 
-// Provider
+
 export function OrdersProvider({ children }) {
   const [state, dispatch] = useReducer(ordersReducer, ordersInitialState);
 
@@ -24,7 +24,6 @@ export function OrdersProvider({ children }) {
   return <OrdersContext.Provider value={value}>{children}</OrdersContext.Provider>;
 }
 
-// Hook para usar el contexto
 export function useOrders() {
   const ctx = useContext(OrdersContext);
   if (!ctx) throw new Error("useOrders must be used within OrdersProvider");

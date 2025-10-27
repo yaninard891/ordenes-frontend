@@ -10,10 +10,9 @@ export default function FechaField({ value, onChange, error }) {
         type="date"
         value={value}
         onChange={onChange}
-        error={!!error}
         variant="outlined"
         InputLabelProps={{
-          shrink: true,  // Esto hace que la etiqueta no se superponga al selector de fecha
+          shrink: true,
         }}
       />
       {error && <FormHelperText>{error}</FormHelperText>}
