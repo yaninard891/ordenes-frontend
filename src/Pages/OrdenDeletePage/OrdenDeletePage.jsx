@@ -25,7 +25,7 @@ export default function OrdenDeletePage() {
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [refresh, setRefresh] = useState(false);
 
-  // Traer órdenes con estado
+ 
   useEffect(() => {
     const fetchOrdenes = async () => {
       try {
@@ -38,7 +38,7 @@ export default function OrdenDeletePage() {
     fetchOrdenes();
   }, [refresh]);
 
-  // Filtrar órdenes según el valor de `query`
+ 
   const filteredOrdenes = ordenes.filter((o) => {
     const q = query.toLowerCase();
     return (
@@ -54,15 +54,15 @@ export default function OrdenDeletePage() {
 
   const confirmDelete = async () => {
     try {
-      const res = await DeleteOrden(toDelete._id);
-      if (res?.message === "Orden eliminada") {
+      await DeleteOrden(toDelete._id);
+      
         setSnackbar({ open: true, message: "Orden eliminada exitosamente", severity: "success" });
-        setRefresh((prev) => !prev); // Cambiar estado para refrescar la lista
-      } else {
-        setSnackbar({ open: true, message: "Error al eliminar orden", severity: "error" });
-      }
-    } catch {
-      setSnackbar({ open: true, message: "Error al eliminar orden", severity: "error" });
+        setRefresh((prev) => !prev); 
+     
+    } catch (error) {
+    console.error(error);
+  
+    setSnackbar({ open: true, message: "Error al eliminar orden", severity: "error" });
     }
     setOpenDialog(false);
   };
@@ -87,7 +87,8 @@ export default function OrdenDeletePage() {
 
       <Grid container spacing={2}>
         {filteredOrdenes.map((orden) => (
-          <Grid item xs={12} sm={6} md={4} key={orden._id}>
+          <Grid item key={orden._id } sx={{ width: { xs: '100%', sm: '50%', md: '33%'  }}}>
+
             <Paper sx={{ p: 2 }}>
               <Typography><b>Destino:</b> {orden.destino}</Typography>
               <Typography><b>Contenido:</b> {orden.contenido}</Typography>
@@ -105,22 +106,17 @@ export default function OrdenDeletePage() {
         ))}
       </Grid>
 
-      {/* Dialogo de confirmación */}
+     
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Confirmar eliminación</DialogTitle>
-        <DialogContent>
-          <Typography>
-            ¿Seguro que quieres eliminar <b>{toDelete?.destino}</b> (ID: {toDelete?._id})?
-            Esta acción no se puede deshacer.
-          </Typography>
-        </DialogContent>
+       
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)}>Cancelar</Button>
           <Button color="error" onClick={confirmDelete}>Eliminar</Button>
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar para mostrar mensajes de éxito o error */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}
@@ -128,6 +124,6 @@ export default function OrdenDeletePage() {
       >
         <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
       </Snackbar>
-    </Container> // Asegúrate de que el Container esté cerrado correctamente
+    </Container> 
   );
 }

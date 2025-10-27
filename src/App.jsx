@@ -6,6 +6,8 @@ import Home from "./Pages/Home/Home";
 import AddOrden from "./Pages/AddOrden/AddOrden";
 import OrderDetailPage from "./Pages/OrderDetail/OrderDetailPages";
 import UpdateOrdenPages from "./Pages/UpdateOrden/updateOrdenPages"; 
+import OrdenDeletePage from "./Pages/OrdenDeletePage/OrdenDeletePage";
+
 
 function App() {
   return (
@@ -14,8 +16,9 @@ function App() {
       <Route element={<Layout title="Gestión de Órdenes" subtitle="Lista de órdenes" />}>
         <Route path="/" element={<Home />} />            
         <Route path="/addOrden" element={<AddOrden />} />  
-        <Route path="/order/:id" element={<OrderDetailPage />} /> {/* Detalle de orden */}
-        <Route path="/orders/edit" element={<UpdateOrdenPages />} /> {/* Editar órdenes */}
+        <Route path="/order/:id" element={<OrderDetailPage />} /> 
+        <Route path="/orders/edit" element={<UpdateOrdenPages />} /> 
+        <Route path="/orders/delete" element={<OrdenDeletePage />} />
       </Route>
     </Routes>
     
