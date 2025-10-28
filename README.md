@@ -1,6 +1,20 @@
 # GESTION DE ORDENES 
-Esta aplicación es desarrollada con React, que se puede administar y gestionar las ordenes.
-Prermite listar, filtrar por estado, agregar, editar y eliminar ordenes. Está construida utilizando Material UI.
+Esta aplicación es desarrollada con React, construida utilizando Material UI, creada para administar y gestionar ordenes.
+Esta aplicación permite gestionar órdenes de productos, permitiendo a los usuarios:
+- Ver todas las órdenes en un listado filtrable.
+- Ver los detalles de cada orden.
+- Agregar nuevas órdenes mediante un formulario.
+- Editar y eliminar órdenes existentes.
+
+
+## Despliegue
+
+La aplicación está desplegada y accesible en el siguiente enlace:
+
+[Visitar la aplicación](https://nombre-del-proyecto.vercel.app)
+
+---
+
 
 
 ## Tecnologías utilizadas
@@ -74,9 +88,8 @@ src/
 
 | **Ruta**                      | **Descripción**                                                                 |
 |-------------------------------|---------------------------------------------------------------------------------|
-| `/`                            | **Página Principal**: Muestra una lista de todas las órdenes existentes.        |
+| `/`                            | **Página Principal**: Muestra una lista de todas las órdenes existentes y filtro.        |
 | `/addOrden`                    | **Agregar Orden**: Permite agregar una nueva orden mediante un formulario.      |
-| `/order/:id`                   | **Detalles de la Orden**: Muestra los detalles completos de una orden específica. El `:id` es el identificador de la orden. |
 | `/orders/edit/:id`             | **Editar Orden**: Permite editar una orden existente usando su `id`.           |
 | `/orders/delete/:id`           | **Eliminar Orden**: Permite eliminar una orden específica usando su `id`.      |
 
@@ -94,8 +107,8 @@ src/
     npm install
     ```
 
-3. **Inicia el servidor de desarrollo:**
+3. **Correr el proyecto:**
     ```bash
-    npm start
+    npm run dev
     ```
 
