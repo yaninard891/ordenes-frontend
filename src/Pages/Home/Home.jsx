@@ -19,7 +19,7 @@ const getColor = (estado) => {
 };
 
 export default function Home() {
-  const {
+  const { 
     ordenesFiltradas,
     loading,
     error,

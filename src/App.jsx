@@ -13,12 +13,13 @@ function App() {
   return (
    
   <Routes>
-      <Route element={<Layout title="Gestión de Órdenes" subtitle="Lista de órdenes" />}>
+      <Route element={<Layout title="GESTION DE ORDENES" subtitle="Lista de Ordenes" />}>
         <Route path="/" element={<Home />} />            
         <Route path="/addOrden" element={<AddOrden />} />  
         <Route path="/order/:id" element={<OrderDetailPage />} /> 
         <Route path="/orders/edit" element={<UpdateOrdenPages />} /> 
         <Route path="/orders/delete" element={<OrdenDeletePage />} />
+        
       </Route>
     </Routes>
     
