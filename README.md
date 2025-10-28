@@ -1,16 +1,69 @@
-# React + Vite
+#GESTION DE ORDENES 
+Esta aplicación es desarrollada con React, que se puede administar y gestionar las ordenes.
+Prermite listar, filtrar por estado, agregar, editar y eliminar ordenes. Está construida utilizando Material UI.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+* Tecnologías utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React: La biblioteca principal para construir la interfaz de usuario.
 
-## React Compiler
+- Material UI: Biblioteca de componentes UI para facilitar el diseño de la aplicación.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React Router: Para la gestión de rutas y navegación dentro de la aplicación.
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+``src/``
+``├── components/ ``
+``│   ├── pagesComponents/ ``
+``│   │   ├──DesktopTable/``
+``│   │   │      └──OrdenesDesktopTable.jsx``
+``│   │   ├──MobileTable/``
+``│   │   │      └──OrdenMobileTable.jsx``
+``│   │   ├── TableOrden.jsx``
+``│   │   ├── Layout.jsx``
+``│   │   ├──NavButton.jsx``
+``│   │   └── OrderDetailContent.jsx``
+``│   ├── ui/
+``│        ├──color-mode.jsx
+``│        ├──provider.jsx
+``│        └──tooltip.jsx
+``│
+``├── context/
+``│    ├── reducers/
+``│    │      ├── OrdersReducer.js
+``│    │      └── detailReducer.js
+``│    ├── OrdenContext.jsx
+``│    └── OrdenDetailContext.jsx
+``│
+``├── hooks/
+``│   └── UseResponsive.js
+``│
+``├── pages/
+``│   ├── AddOrden/
+``│   │      ├──Components/
+``│   │      │     ├── ContenidoField.jsx
+``│   │      │     ├── DestinoField.jsx
+``│   │      │     ├── EstadoField.jsx
+``│   │      │     └── FechaField.jsx
+``│   │      ├── Hooks/
+``│   │      │     └──useAddOrdenForm.js
+``│   │      └── AddOrden.jsx     
+``│   ├── Home/
+``│   │       ├── Components/
+``│   │       │    ├── FilterDrawer.jsx
+``│   │       │    └──OrdenDetailDrawer.jsx
+``│   │       ├── Hooks/
+``│   │       │     └──useHome.js
+``│   │       └── Home.jsx   
+``│   ├── UpdateOrden/
+``│             └── updateOrdenlPages.jsx  
+``├── Services/
+``│    ├── getOrderByCategory.js
+``│    ├── DeleteOrden.js
+``│    ├── AddOrdenEndpoint.js
+``│    └── updateOrden.js
+``│
+``└── App.jsx\
+``
