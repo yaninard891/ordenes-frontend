@@ -6,7 +6,7 @@ import { OrderDetailContent } from "../../components/pagesComponents/OrderDetail
 
 export default function OrderDetailPage() {
   const { id } = useParams();
-  const { ordenes } = useHome();  // Asegúrate de que `useHome` devuelva órdenes
+  const { ordenes } = useHome();  
 
   const orden = ordenes?.find((o) => (o._id || String(o.id)) === id);
 

@@ -1,26 +1,11 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Chip,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Divider,
-  IconButton,
-  Drawer,
-} from "@mui/material";
+import { Box, Grid, Card, CardContent, Typography, Chip, CircularProgress, FormControl, InputLabel, Select, MenuItem, Divider, IconButton, Drawer, } from "@mui/material";
 import { useHome } from "./Hooks/useHome";
 import { EditOrdenModal } from "../UpdateOrden/Components/EditOrdenModal";
 import { updateOrden } from "../../services/updateOrden";
 import CloseIcon from "@mui/icons-material/Close";
 
-// Función para obtener el color de acuerdo al estado
+
 const getColor = (estado) => {
   switch (estado) {
     case "Pendiente":
@@ -30,8 +15,7 @@ const getColor = (estado) => {
     case "Entregado":
       return "success";
     default:
-      return "default"; // Por si se pasa un estado no conocido
-  }
+      return "default"; }
 };
 
 export default function Home() {
@@ -44,18 +28,18 @@ export default function Home() {
     setEstadoSeleccionado,
   } = useHome();
 
-  const [selectedDetail, setSelectedDetail] = useState(null); // Detalle seleccionado
-  const [selectedForEdit] = useState(null); // Orden seleccionada para editar
+  const [selectedDetail, setSelectedDetail] = useState(null); 
+  const [selectedForEdit] = useState(null); 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
-  // Función para abrir el drawer con el detalle de la orden
+  
   const handleOpenDrawer = (orden) => {
     setSelectedDetail(orden);
     setDrawerOpen(true);
   };
 
-  // Función para enviar los cambios de la orden
+  
   const handleSubmit = async (data) => {
     if (!selectedForEdit) return;
     try {
@@ -69,7 +53,7 @@ export default function Home() {
     }
   };
 
-  // Muestra el loading cuando la data está siendo cargada
+
   if (loading)
     return (
       <Box display="flex" justifyContent="center" mt={10}>
@@ -77,7 +61,6 @@ export default function Home() {
       </Box>
     );
 
-  // Muestra el error en caso de que haya uno
   if (error)
     return (
       <Box display="flex" justifyContent="center" mt={10}>
@@ -92,7 +75,7 @@ export default function Home() {
         Gestión de Órdenes
       </Typography>
 
-      {/* Filtro por estado */}
+      
       <FormControl sx={{ minWidth: 220, mb: 4 }}>
         <InputLabel>Filtrar por estado</InputLabel>
         <Select
@@ -179,7 +162,7 @@ export default function Home() {
         )}
       </Drawer>
 
-      {/* Modal para editar la orden */}
+     
       {selectedForEdit && (
         <EditOrdenModal
           isOpen={editModalOpen}
