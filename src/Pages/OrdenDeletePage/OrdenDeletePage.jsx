@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Grid,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Snackbar,
-  Alert,
-} from "@mui/material";
+import { Container, Typography, TextField, Button, Box, Grid, Paper, Dialog, DialogTitle, DialogContent, DialogActions, Snackbar, Alert,} from "@mui/material";
 import { getOrderByState } from "../../services/getOrderByState";
 import { DeleteOrden } from "../../services/DeleteOrden";
 
@@ -29,7 +15,7 @@ export default function OrdenDeletePage() {
   useEffect(() => {
     const fetchOrdenes = async () => {
       try {
-        const data = await getOrderByState(); // Asegúrate de que esta función esté bien definida
+        const data = await getOrderByState(); 
         setOrdenes(data);
       } catch {
         setSnackbar({ open: true, message: "Error al cargar órdenes", severity: "error" });

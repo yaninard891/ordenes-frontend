@@ -8,10 +8,8 @@ export default function OrderDetailPage() {
   const { id } = useParams();
   const { ordenes } = useHome();  // Asegúrate de que `useHome` devuelva órdenes
 
-  // Buscar la orden usando el ID
   const orden = ordenes?.find((o) => (o._id || String(o.id)) === id);
 
-  // Si no se encuentra la orden, mostrar mensaje
   if (!orden) {
     return (
       <Container maxWidth="md" sx={{ py: 6 }}>
@@ -22,11 +20,10 @@ export default function OrderDetailPage() {
     );
   }
 
-  // Renderizar la orden
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Paper elevation={2} sx={{ p: 4, borderRadius: 3 }}>
-        {/* Contenido de la orden */}
+        
         <Stack spacing={2}>
           <OrderDetailContent orden={orden} />
         </Stack>

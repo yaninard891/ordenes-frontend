@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import {
-  ordersReducer,
-  ordersInitialState,
-  ORDERS_ACTIONS,
-} from "./reducers/OrdersReducer";
+import { ordersReducer, ordersInitialState, ORDERS_ACTIONS, } from "./reducers/OrdersReducer";
 
 
 const OrdersContext = createContext(null);

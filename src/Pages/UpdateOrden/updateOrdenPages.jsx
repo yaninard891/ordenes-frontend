@@ -37,7 +37,7 @@ export default function UpdateOrdenPages() {
   
   const handleSubmit = async (form) => {
     try {
-      const response = await updateOrden (form, editingOrder._id); // Actualizamos la orden
+      const response = await updateOrden (form, editingOrder._id); 
       if (response?.status === 200) {
         setSnackbar({
           open: true,

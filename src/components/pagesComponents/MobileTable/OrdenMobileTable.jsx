@@ -1,64 +1,60 @@
 import React from "react";
-import { Box, HStack, Badge, IconButton, Stack, Text } from "@chakra-ui/react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { Box, Badge, IconButton, Stack, Typography, Grid } from "@mui/material";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 
-const formatPrice = (v) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  }).format(v || 0);
-
-export function OrdenMobileTable ({ ordenes = [], onEdit, onDelete }) {
+export function OrdenMobileTable({ ordenes = [], onEdit, onDelete }) {
   return (
     <Stack gap={3}>
-      {ordenes?.map((p) => (
-        <Box key={p._id} borderWidth="1px" borderRadius="xl" bg="white" p={3}>
+      {ordenes?.map((orden) => (
+        <Box key={orden._id} border={1} borderRadius="12px" bgcolor="white" p={2} boxShadow={1}>
           <Stack gap={1}>
-            <HStack justify="space-between" align="start">
-              <Text fontWeight="bold" noOfLines={1}>
-                {p.nombre}
-              </Text>
-              <Badge colorScheme="purple" flexShrink={0}>
-                {p.categoria || "General"}
-              </Badge>
-            </HStack>
+            <Grid container justifyContent="space-between">
+              <Grid item xs={8}>
+                <Typography variant="body1" fontWeight="bold" noWrap>
+                  {orden.destino}
+                </Typography>
+              </Grid>
+              <Grid item xs={4} container justifyContent="flex-end">
+          
+                <Badge
+                  color={orden.estado === "Pendiente" ? "warning" : orden.estado === "En transito" ? "info" : "success"}
+                  variant="outlined"
+                  sx={{ padding: 0.5 }}
+                >
+                  {orden.estado || "Desconocido"}
+                </Badge>
+              </Grid>
+            </Grid>
 
-            <Text fontSize="sm" color="sand.700">
-              ID: {p._id}
-            </Text>
+           
+            <Typography variant="body2" color="textSecondary" mt={1}>
+              Descripción: {orden.descripcion}
+            </Typography>
 
-            <HStack justify="space-between" mt={1}>
-              <Text fontWeight="semibold">{formatPrice(p.precio)}</Text>
-              <Text fontSize="sm" color={p.stock > 0 ? "green.600" : "red.600"}>
-                {p.stock ?? 0} en stock
-              </Text>
-            </HStack>
-
+            
             {(onEdit || onDelete) && (
-              <HStack justify="flex-end" gap={2} mt={2}>
+              <Stack direction="row" justifyContent="flex-end" gap={2} mt={2}>
                 {onEdit && (
                   <IconButton
                     aria-label="Editar"
-                    size="xs"
-                    variant="subtle"
-                    onClick={() => onEdit(p)}
+                    size="small"
+                    color="primary"
+                    onClick={() => onEdit(orden)}
                   >
-                    <FiEdit />
+                    <EditIcon />
                   </IconButton>
                 )}
                 {onDelete && (
                   <IconButton
                     aria-label="Eliminar"
-                    size="xs"
-                    variant="subtle"
-                    colorPalette="red"
-                    onClick={() => onDelete(p)}
+                    size="small"
+                    color="error"
+                    onClick={() => onDelete(orden)}
                   >
-                    <FiTrash2 />
+                    <DeleteIcon />
                   </IconButton>
                 )}
-              </HStack>
+              </Stack>
             )}
           </Stack>
         </Box>

@@ -5,7 +5,7 @@ export const DeleteOrden = async (id) => {
     const res = await fetch(`${BASE_URL}${id}`, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json", // consistente con fetch moderno
+        "Content-Type": "application/json",
       },
     });
 

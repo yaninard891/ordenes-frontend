@@ -13,9 +13,9 @@ export function useResponsiveOrderDetail() {
   const openDetail = useCallback(
     (order) => {
       if (isDesktop) {
-        setIsOpen(true); // Abrir drawer en desktop
+        setIsOpen(true); 
       } else {
-        navigate(`/order/${order._id}`); // Ir a la página de detalle en móvil
+        navigate(`/order/${order._id}`); 
       }
     },
     [isDesktop, navigate]

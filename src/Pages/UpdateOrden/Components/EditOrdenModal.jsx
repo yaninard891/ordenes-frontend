@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Box, TextField, Button, CircularProgress, Alert } from "@mui/material";
+import { Modal, Box, TextField, Button, CircularProgress, Alert, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 export const EditOrdenModal = ({ isOpen, onClose, order, onSubmit }) => {
   const [form, setForm] = useState({ ...order });
@@ -20,9 +20,9 @@ export const EditOrdenModal = ({ isOpen, onClose, order, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Restablecer el error al intentar enviar
+    setError(""); 
 
-    // Validación del estado (si existe alguna restricción de valores posibles)
+    
     if (!["Pendiente", "En transito", "Entregado"].includes(form.estado)) {
       setError("Estado no válido. Selecciona un estado válido.");
       setLoading(false);
@@ -80,16 +80,21 @@ export const EditOrdenModal = ({ isOpen, onClose, order, onSubmit }) => {
             fullWidth
             margin="normal"
           />
-          <TextField
-            label="Estado"
-            name="estado"
-            value={form.estado}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            helperText="Estado debe ser Pendiente, En transito o Entregado"
-          />
-
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Estado</InputLabel>
+            <Select
+              label="Estado"
+              name="estado"
+              value={form.estado}
+              onChange={handleChange}
+            >
+              <MenuItem value="Pendiente">Pendiente</MenuItem>
+              <MenuItem value="En transito">En transito</MenuItem>
+              <MenuItem value="Entregado">Entregado</MenuItem>
+              
+            </Select>
+          </FormControl>
+          
           <Box mt={2}>
             <Button
               type="submit"

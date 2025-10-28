@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Typography,
-  Stack,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
+import { Box, Button, Container, Typography,Stack,AppBar,Toolbar,} from "@mui/material";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 import { NavButton } from "./NavButton";
 
 export function Layout({
-  title = "Gestión de Órdenes",
-  subtitle = "Lista de órdenes",
+  title = "GESTION DE ORDENES",
+  subtitle = "Lista de ordenes",
 }) {
   const location = useLocation();
 
@@ -96,17 +88,9 @@ export function Layout({
         <Container maxWidth="lg">
           <Stack direction="row" alignItems="center" spacing={2}>
             <Typography color="text.secondary" variant="body2" flexGrow={1}>
-              © {new Date().getFullYear()} Órdenes
+              © {new Date().getFullYear()} ordenes
             </Typography>
-            <Button
-              component={NavLink}
-              to="/addOrden"
-              variant="text"
-              size="small"
-              sx={{ "&:hover": { bgcolor: "grey.100" } }}
-            >
-              Agregar órdenes
-            </Button>
+          
           </Stack>
         </Container>
       </Box>

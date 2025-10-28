@@ -6,7 +6,7 @@ export function NavButton({ to, active, children }) {
     <Button
       component={NavLink}
       to={to}
-      variant={active ? "contained" : "text"}  // "solid" ~ "contained", "ghost" ~ "text"
+      variant={active ? "contained" : "text"}  
       color="primary"
       size="small"
       sx={{ borderRadius: "12px" }}>

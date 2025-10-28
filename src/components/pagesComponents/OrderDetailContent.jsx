@@ -6,33 +6,9 @@ export function OrderDetailContent({ orden }) {
 
   return (
     <Stack spacing={3} alignItems="flex-start">
-      {/* Contenedor principal de la "imagen" de la orden (opcional) */}
-      <Box
-        sx={{
-          width: "100%",
-          height: 220,
-          borderRadius: 2,
-          backgroundColor: "grey.100",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-        }}
-      >
-        <img
-          src={`https://source.unsplash.com/800x500/?package`}
-          alt={`Orden ${orden._id}`}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={(e) =>
-            (e.currentTarget.src = `https://picsum.photos/seed/${encodeURIComponent(
-              orden._id || "orden"
-            )}/800/500`)
-          }
-          loading="lazy"
-        />
-      </Box>
-
-      {/* Información principal */}
+     
+   
+      
       <Stack direction="row" justifyContent="space-between" width="100%">
         <Typography variant="h6" fontWeight="bold">
           Destino: {orden.destino}
@@ -58,7 +34,7 @@ export function OrderDetailContent({ orden }) {
         )}
       </Stack>
 
-      {/* Botón adicional */}
+     
       <Stack direction="row" spacing={1} sx={{ pt: 1 }}>
         <Button variant="outlined">Compartir</Button>
       </Stack>

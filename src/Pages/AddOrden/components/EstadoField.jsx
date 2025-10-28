@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, MenuItem } from "@mui/material";
 
 export default function EstadoField({ value, onChange, error }) {
-  const opcionesEstado = ["Pendiente", "En transito", "Entregada", "Otros"];
+  const opcionesEstado = ["Pendiente", "En transito", "Entregado", "Otros"];
 
   return (
     <TextField
